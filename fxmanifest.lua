@@ -3,7 +3,7 @@ game 'gta5'
 lua54 'yes'
 author 'Kakarot'
 description 'Allows players to work at the vineyard for items to sell'
-version '1.2.0'
+version '1.5.0'
 
 shared_scripts {
     '@qb-core/shared/locale.lua',
