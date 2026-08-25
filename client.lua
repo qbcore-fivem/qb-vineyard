@@ -326,6 +326,37 @@ Zones[3].zone:onPlayerInOut(function(isPointInside)
 								grapeJuiceProcess()
 							end
 						end)
+
+						if Config.Sell and Config.Sell.enabled then
+							Zones[4] = {
+								isInside = false,
+								zone = PolyZone:Create(Config.Sell.zones, {
+									name = 'Vineyard-Sell',
+									minZ = Config.Sell.minZ,
+									maxZ = Config.Sell.maxZ,
+									debugPoly = Config.Debug
+								})
+							}
+							Zones[4].zone:onPlayerInOut(function(isPointInside)
+								Zones[4].isInside = isPointInside
+								if isPointInside then
+									if Config.Debug then log(Lang:t('text.zone_entered', { zone = 'Sell' })) end
+									CreateThread(function()
+										while Zones[4].isInside do
+											exports['qb-core']:DrawText(Lang:t('task.sell_items'), 'right')
+											if IsControlJustPressed(0, 38) and not LocalPlayer.state.inv_busy then
+												TriggerServerEvent('qb-vineyard:server:sellItems')
+												Wait(1000)
+											end
+											Wait(1)
+										end
+									end)
+								else
+									if Config.Debug then log(Lang:t('text.zone_exited', { zone = 'Sell' })) end
+									exports['qb-core']:HideText()
+								end
+							end)
+						end
 					end
 					Wait(1)
 				end

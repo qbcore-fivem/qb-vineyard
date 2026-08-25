@@ -69,3 +69,30 @@ RegisterNetEvent('qb-vineyard:server:receiveGrapeJuice', function()
     exports['qb-inventory']:AddItem(source, 'grapejuice', amount, false, false, 'qb-vineyard:server:receiveGrapeJuice')
     TriggerClientEvent('qb-inventory:client:ItemBox', source, sharedItems['grapejuice'], 'add')
 end)
+
+RegisterNetEvent('qb-vineyard:server:sellItems', function()
+    local src = source
+    local Player = exports['qb-core']:GetPlayer(src)
+    if not Player then return end
+    if not Config.Sell or not Config.Sell.enabled then return end
+
+    local total = 0
+    local soldAny = false
+    for itemName, price in pairs(Config.Sell.prices or {}) do
+        local item = Player.GetItemByName(itemName)
+        if item and item.amount and item.amount > 0 then
+            exports['qb-inventory']:RemoveItem(src, itemName, item.amount, false, 'qb-vineyard:server:sellItems')
+            TriggerClientEvent('qb-inventory:client:ItemBox', src, sharedItems[itemName], 'remove')
+            total = total + (item.amount * price)
+            soldAny = true
+        end
+    end
+
+    if not soldAny then
+        TriggerClientEvent('QBCore:Notify', src, Lang:t('error.no_items'), 'error')
+        return
+    end
+
+    Player.Functions.AddMoney('cash', total, 'qb-vineyard:sellItems')
+    TriggerClientEvent('QBCore:Notify', src, ('Sold goods for $%s'):format(total), 'success')
+end)

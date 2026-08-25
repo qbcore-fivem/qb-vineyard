@@ -5,6 +5,22 @@ Config = {
 	GrapeJuiceAmount = { min = 6, max = 10 },
 	WineAmount = { min = 6, max = 10 },
 	wineTimer = 180,
+	Sell = {
+		enabled = true,
+		coords = vector3(-1487.32, -379.02, 40.16),
+		zones = {
+			vector2(-1485.89, -377.54),
+			vector2(-1487.87, -376.12),
+			vector2(-1488.95, -377.67),
+			vector2(-1486.92, -379.12),
+		},
+		minZ = 39.60,
+		maxZ = 41.20,
+		prices = {
+			wine = 15,
+			grapejuice = 10
+		}
+	},
 	Vineyard = {
 		start = {
 			coords = vector3(-1928.81, 2059.53, 140.84),
