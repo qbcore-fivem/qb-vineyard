@@ -14,6 +14,7 @@ local Translations = {
         ["wine_process"] = "[E] Start WineProcess",
         ["get_wine"] = "[E] Get Wine",
         ["make_grape_juice"] = "[E] Make Grape Juice",
+        ["sell_items"] = "[E] Sell Wine / Grape Juice",
         ["countdown"] = "Time Remaining %{time}s",
         ['cancel_task'] = "You have cancelled the task"
     },
